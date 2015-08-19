@@ -10,15 +10,20 @@ import UIKit
 
 let APIKey = "ebcfb60e7224e45b7058a91cfcac023e"
 
-class ViewController: UIViewController ,MAMapViewDelegate, AMapSearchDelegate{
+class ViewController: UIViewController ,MAMapViewDelegate, AMapSearchDelegate,UITableViewDelegate,UITableViewDataSource{
     
     var mapView:MAMapView?
     var search:AMapSearchAPI?
     var currentLocation:CLLocation?
-    var buttonLocation:UIButton = UIButton()
+    var buttonLocation = UIButton()
+    var buttonSearchNearby = UIButton()
+    var tableView:UITableView = UITableView()
+    var pois = [AMapPOI]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        search?.delegate = self
         
         MAMapServices.sharedServices().apiKey = APIKey
         
@@ -27,11 +32,15 @@ class ViewController: UIViewController ,MAMapViewDelegate, AMapSearchDelegate{
         initSearch()
         
         initButtonLocation()
+        
+        initTableView()
     }
 
     func initMapView(){
         
-        mapView = MAMapView(frame: self.view.bounds)
+        mapView = MAMapView(frame: CGRectMake(0, 0, DeviceData.screenWidth, DeviceData.screenHeight * 0.5))
+        
+        
         
         mapView!.delegate = self
         
@@ -109,27 +118,99 @@ class ViewController: UIViewController ,MAMapViewDelegate, AMapSearchDelegate{
         }
         
     }
-    
+    /**
+    回调方法
+    当userTrackingMode状态发生改变的时候进行回调
+    */
     func mapView(mapView: MAMapView!, didChangeUserTrackingMode mode: MAUserTrackingMode, animated: Bool) {
         if mode == .None {
-            buttonLocation.backgroundColor = UIColor.redColor()
+            buttonLocation.setImage(UIImage(named: "locationing"), forState: .Normal)
             
         } else {
-            buttonLocation.backgroundColor = UIColor.greenColor()
-        }
+            buttonLocation.setImage(UIImage(named: "locationed"), forState: .Normal)        }
+    }
+    
+    /**
+    回调方法
+    
+    获取搜索的数据
+    */
+    
+    func onPlaceSearchDone(request: AMapPlaceSearchRequest!, response: AMapPlaceSearchResponse!) {
+        println("\(request)")
+        println("\(response)")
+        if((response) == nil) {return}
+        pois = response.pois  as! [(AMapPOI)]
+        println("___________\(pois)")
+        tableView.reloadData()
+    }
+    
+    func searchRequest(request: AnyObject!, didFailWithError error: NSError!) {
+        println("\(error)")
     }
     
     func initButtonLocation() {
-        buttonLocation.frame = CGRectMake(20, 40, 40, 40)
+        buttonLocation.frame = CGRectMake(20, mapView!.frame.height - 60, 30, 30)
         buttonLocation.addTarget(self, action: "getJiaoDian", forControlEvents: UIControlEvents.TouchDown)
-        buttonLocation.backgroundColor = UIColor.redColor()
+        buttonLocation.setImage(UIImage(named: "locationed"), forState: .Normal)
         
+        buttonSearchNearby.frame = CGRectMake(DeviceData.screenWidth - 40, 60, 30, 30)
+        buttonSearchNearby.setImage(UIImage(named: "search.png"), forState: .Normal)
+        buttonSearchNearby.addTarget(self, action: "searchAction", forControlEvents: .TouchDown)
+        
+        self.view.addSubview(buttonSearchNearby)
         self.view.addSubview(buttonLocation)
     }
     
     func getJiaoDian() {
         mapView!.userTrackingMode = mapView?.userTrackingMode == .None ? .None : .Follow
     }
+    
+    func searchAction() {
+        
+        var request:AMapPlaceSearchRequest = AMapPlaceSearchRequest()
+        request.searchType = AMapSearchType.PlaceAround
+        request.location = AMapGeoPoint.locationWithLatitude(CGFloat(currentLocation!.coordinate.latitude), longitude: CGFloat(currentLocation!.coordinate.longitude))
+        request.keywords = "餐厅"
+        println("\(currentLocation!.coordinate.latitude)")
+        
+        search?.AMapPlaceSearch(request)
+    }
+    
+    
+    func initTableView() {
+        tableView.frame = CGRectMake(0, DeviceData.screenHeight / 2, DeviceData.screenWidth, DeviceData.screenHeight / 2)
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        self.view.addSubview(tableView)
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        
+        cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
+        
+        var poi:AMapPOI = pois[indexPath.row]
+        
+        cell.textLabel?.text = "\(poi.name)"
+        
+        cell.detailTextLabel?.text = "\(poi.address)"
+        
+        return cell
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return pois.count
+    }
+    
+    
+    
     
     
 }

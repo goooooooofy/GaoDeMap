@@ -27,6 +27,10 @@
 		80B9ADC71B84255100479598 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B9ADC61B84255100479598 /* Security.framework */; };
 		80B9ADCA1B8426AB00479598 /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80B9ADC91B8426AB00479598 /* AMapSearchKit.framework */; };
 		80B9ADCC1B84285000479598 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 80B9ADCB1B84285000479598 /* AMap.bundle */; };
+		80C914B51B84C57200825C3D /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 80C914B41B84C57200825C3D /* search.png */; };
+		80C914B71B84C5A500825C3D /* DeviceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C914B61B84C5A500825C3D /* DeviceData.swift */; };
+		80C914BA1B84C7F900825C3D /* locationed.png in Resources */ = {isa = PBXBuildFile; fileRef = 80C914B81B84C7F900825C3D /* locationed.png */; };
+		80C914BB1B84C7F900825C3D /* locationing.png in Resources */ = {isa = PBXBuildFile; fileRef = 80C914B91B84C7F900825C3D /* locationing.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +69,10 @@
 		80B9ADC81B8425BB00479598 /* AMapDemoSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AMapDemoSwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		80B9ADC91B8426AB00479598 /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapSearchKit.framework; sourceTree = "<group>"; };
 		80B9ADCB1B84285000479598 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
+		80C914B41B84C57200825C3D /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		80C914B61B84C5A500825C3D /* DeviceData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceData.swift; sourceTree = "<group>"; };
+		80C914B81B84C7F900825C3D /* locationed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locationed.png; sourceTree = "<group>"; };
+		80C914B91B84C7F900825C3D /* locationing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locationing.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,10 +127,12 @@
 		80B9AD8C1B84203B00479598 /* GaoDeMapTest */ = {
 			isa = PBXGroup;
 			children = (
+				80C914B31B84C56600825C3D /* image */,
 				80B9ADB11B8424DB00479598 /* Framework */,
 				80B9AD8F1B84203C00479598 /* AppDelegate.swift */,
 				80B9ADC81B8425BB00479598 /* AMapDemoSwift-Bridging-Header.h */,
 				80B9AD911B84203C00479598 /* ViewController.swift */,
+				80C914B61B84C5A500825C3D /* DeviceData.swift */,
 				80B9AD931B84203C00479598 /* Main.storyboard */,
 				80B9AD961B84203C00479598 /* Images.xcassets */,
 				80B9AD981B84203C00479598 /* LaunchScreen.xib */,
@@ -175,6 +185,16 @@
 				80B9ADAF1B84248C00479598 /* MAMapKit.framework */,
 			);
 			name = Framework;
+			sourceTree = "<group>";
+		};
+		80C914B31B84C56600825C3D /* image */ = {
+			isa = PBXGroup;
+			children = (
+				80C914B81B84C7F900825C3D /* locationed.png */,
+				80C914B91B84C7F900825C3D /* locationing.png */,
+				80C914B41B84C57200825C3D /* search.png */,
+			);
+			name = image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,10 +277,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80C914B51B84C57200825C3D /* search.png in Resources */,
 				80B9AD951B84203C00479598 /* Main.storyboard in Resources */,
 				80B9AD9A1B84203C00479598 /* LaunchScreen.xib in Resources */,
 				80B9ADCC1B84285000479598 /* AMap.bundle in Resources */,
 				80B9AD971B84203C00479598 /* Images.xcassets in Resources */,
+				80C914BB1B84C7F900825C3D /* locationing.png in Resources */,
+				80C914BA1B84C7F900825C3D /* locationed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +303,7 @@
 			files = (
 				80B9AD921B84203C00479598 /* ViewController.swift in Sources */,
 				80B9AD901B84203C00479598 /* AppDelegate.swift in Sources */,
+				80C914B71B84C5A500825C3D /* DeviceData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +509,7 @@
 				80B9ADAB1B84203C00479598 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		80B9ADAC1B84203C00479598 /* Build configuration list for PBXNativeTarget "GaoDeMapTestTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +518,7 @@
 				80B9ADAE1B84203C00479598 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
